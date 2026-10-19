@@ -365,12 +365,30 @@
         </div>
         <button type="button" class="btn btn-outline-secondary static"><span class="btn-xs btn-info">4</span><span class="px-1">-</span><span class="btn-xs btn-warning">3</span></button>
     </div>  -->
-                <!-- <div class="btn-group btn-group-sm dropright">
-          <button type="button" data-bs-toggle="button" class="btn btn-sm btn-outline-secondary flex-grow-1">Cursors</button>
-          <button type="button" class="btn dropdown-toggle dropdown-toggle-split btn-outline-secondary" data-bs-toggle="dropdown"></button>
-          <div class="dropdown-menu">
-          </div>
-      </div> -->
+                <div class="btn-group-vertical btn-group-xs" id="cursor-controls">
+                    <div class="btn-group btn-group-xs">
+                        <button type="button" class="btn btn-outline-secondary" id="cursors-onoff">Cursors
+                        </button>
+                        <div class="btn-group btn-group-xs dropend">
+                            <button type="button"
+                                class="btn dropdown-toggle dropdown-toggle-split btn-outline-secondary"
+                                data-bs-toggle="dropdown"></button>
+                            <div class="dropdown-menu clickable">
+                                <div class="mx-3 my-1 text-white-50" style="white-space: normal;">
+                                    Click the plot to place cursor <strong>A</strong>, then <strong>B</strong>.
+                                    Readings snap to the nearest sample. Use
+                                    <strong>&larr;</strong>/<strong>&rarr;</strong> to nudge the last cursor by one
+                                    sample, or hold shift for ten.
+                                </div>
+                                <div class="mx-3 my-2">
+                                    <button type="button" class="btn btn-outline-secondary btn-xs w-100"
+                                        id="cursors-clear">Clear cursors</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-secondary static" id="cursors-status">Off</button>
+                </div>
             </div>
             <div class="col bg-dark-1l p-0 flex-column d-flex overflow-hidden">
                 <div class="row h-100 w-100 g-0 position-relative align-items-center" id="scope-graph-container">
@@ -380,6 +398,9 @@
                     <div class="h-100 w-100 position-absolute hidden d-flex flex-column overflow-hidden"
                         id="scope-graph-wrapper">
                         <div class="flex-grow-1 w-100 position-relative" id="scope-graph" style="min-height: 0;"></div>
+                        <div class="position-absolute top-0 end-0 m-2 px-2 py-1 d-none" id="cursor-readout">
+                            <table id="cursor-readout-table"></table>
+                        </div>
                         <div class="w-100 bg-dark-1l py-1 text-center" style="z-index: 2;">
                             <div class="btn-group static btn-group-xs" id="horizontal-info" role="group">
                                 <button type="button" class="btn btn-light" id="time-per-div">1.0 s/div</button>

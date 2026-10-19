@@ -21,6 +21,7 @@ import * as axes from './js/Axes.js'
 import * as message from './js/Message.js'
 import * as xygraph from './js/XYGraph.js'
 import * as extraGraph from './js/ExtraGraph.js'
+import * as cursors from './js/Cursors.js'
 import {getId, idFromCh} from './js/Utils.js'
 
 require('./js/Save.js');
@@ -109,11 +110,18 @@ function updatePlot() {
 
     log.debug("updating plot");
 
-    log.debug("adding channel flags");
     let triggerState = nlab.getTriggerStatus(nLab);
     let chState = nlab.getChStatus(nLab);
 
-    let shapes = flags.drawShapes(triggerState, chState);
+    // Update the traces
+    log.debug("update the traces");
+    trace_data = nlab.getTraces(nLab, trace_data);
+
+    log.debug("updating cursor readings");
+    cursors.update(trace_data, chState);
+
+    log.debug("adding channel flags");
+    let shapes = flags.drawShapes(triggerState, chState).concat(cursors.drawShapes(chState));
 
     // Update the axes
     log.debug("updating y-axes");
@@ -124,10 +132,6 @@ function updatePlot() {
         shapes: shapes,
         ...y_axes,
     }
-
-    // Update the traces
-    log.debug("update the traces");
-    trace_data = nlab.getTraces(nLab, trace_data);
 
     log.debug("updating the graph");
     Plotly.update('scope-graph', trace_data, layout_data);
@@ -174,9 +178,11 @@ function monitorScope() {
     if (nlab.isConnected(nLab)) {
         getId('save-traces').classList.remove("disabled");
         getId('extra-graphs-button').classList.remove("disabled");
+        getId('cursor-controls').classList.remove("disabled");
     } else {
         getId('save-traces').classList.add("disabled");
         getId('extra-graphs-button').classList.add("disabled");
+        getId('cursor-controls').classList.add("disabled");
     }
 
     window.requestAnimationFrame(monitorScope);
@@ -187,6 +193,7 @@ pulseOutputs.initInput();
 analogOutputs.initInput();
 timing.initTiming();
 flags.initDragEvents();
+cursors.initCursorEvents();
 window.requestAnimationFrame(updatePlot);
 
 getId('version-display').innerHTML = `v${packageInfo.version}`;

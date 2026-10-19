@@ -121,3 +121,39 @@ label {
     padding-top: 2px;
     cursor: pointer;
 }
+
+#cursor-readout {
+    z-index: 3;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: rgba(100, 100, 100, 1) solid 1px;
+    border-radius: 4px;
+    color: white;
+    font-size: 11px;
+    font-weight: 300;
+    /* The readout sits over the plot, so it must not swallow cursor clicks. */
+    pointer-events: none;
+}
+
+#cursor-readout table {
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+#cursor-readout th, #cursor-readout td {
+    padding: 0 4px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#cursor-readout tr:first-child th {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+}
+
+#cursor-readout .cursor-readout-time th, #cursor-readout .cursor-readout-time td {
+    border-top: rgba(100, 100, 100, 1) solid 1px;
+}
+
+#cursor-controls .dropdown-menu {
+    max-width: 240px;
+}
